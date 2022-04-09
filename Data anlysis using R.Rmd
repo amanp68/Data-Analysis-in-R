@@ -1,0 +1,127 @@
+---
+title: "Data analysis using R Programming"
+author: "Amanpreet Singh"
+date: '2022-04-09'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Ted_Talk_str}
+library(readr)
+Ted_Talk <- read_csv("~/Desktop/Assignments /Semester 2/Intro to analytics R programming/Ted Talk Data/Ted_Talk.csv")
+View(Ted_Talk)
+attach(Ted_Talk)
+str(Ted_Talk) #printing the structure of the dataset
+```
+
+```{r Ted_Talk_ls}
+ls(Ted_Talk) #listing the variables of the datasets
+```
+```{r Ted_Talk_summary}
+summary(Ted_Talk) #listing the variables of the datasets
+```
+```{r Ted_Talk_head}
+head(Ted_Talk, 15) # printing the top 15 rows of the data sets
+```
+```{r Ted_Talk_author}
+author<- function(){
+print("there are many authors who published the books")
+} 
+author
+# creating User-defined function using exsiting varibale in the DataSets
+```
+```{r Ted_Talk_library}
+library(dplyr)
+manipulation_tech=filter(Ted_Talk,views!='NA'& likes!='NA')
+#manipulating data and filtering rowsbased on logical criteria by removing NA values from the datset
+```
+```{r Ted_Talk_reshaping}
+library("tidyr")
+reshaping_columns <- Ted_Talk %>%
+  gather(variable,value ,-c(views,likes))
+#identifyed independent and dependent variables and reshaped them 
+```
+```{r Ted_Talk_clean}
+Clean_dataSets <- na.omit(Ted_Talk) #removing missing values from the dataSets
+```
+```{r Ted_Talk_missing}
+missing_values <- complete.cases(Ted_Talk) #identifying and removing duplicate values from the data set
+duplicate_data <- sum(duplicated(Ted_Talk))
+```
+```{r Ted_Talk_distinct}
+distinct_value <- Ted_Talk %>% distinct()  #to find distinct values in the dataSet
+
+```
+```{r Ted_Talk_drop}
+drop_duplicates_likes <- distinct(Ted_Talk,`likes`, .keep_all= TRUE)
+drop_duplicates_views <- distinct(Ted_Talk,`views`, .keep_all= TRUE)
+# to drop all the duplicates in Views and Likes from the dataSet
+```
+```{r Ted_Talk_desc}
+desc_order <- Ted_Talk[order(-views,-likes), ]
+#reordering Views and Likes in descending order
+```
+```{r Ted_Talk_rename}
+rename_columns <- Ted_Talk %>% 
+  rename(
+   AUTHOR = author,
+   TITLE = title   
+   )
+View(rename_columns)
+#Renaming 'author' and title colums to 'Author' and 'Title in the dataSet
+```
+```{r Ted_Talk_increase}
+Ted_Talk$Increase <- Ted_Talk$likes + 10
+#Adding new Variable as a column in the dataSet by adding 10 to 'Likes'
+```
+```{r Ted_Talk_seed}
+set.seed(10)
+random_numbers <- runif(400, min = 1, max = 3000)
+plot(density(random_numbers))
+```
+```{r Ted_Talk_summ}
+summary(Ted_Talk)     #Summary stats for all the column of the data sets
+summary(Ted_Talk$`likes`)  #Summary stats for any specific column of the data set
+
+```
+
+```{r Ted_Talk_mean}
+mean(Ted_Talk$likes, na.rm = TRUE)  # mean of the dataSet
+```
+```{r Ted_Talk_median}
+median(Ted_Talk$likes, na.rm = TRUE) #median of the dataSet
+```
+```{r Ted_Talk_mode}
+mode(Ted_Talk$likes) #mode of the dataSet
+```
+```{r Ted_Talk_range}
+range(Ted_Talk$likes, na.rm = TRUE) #range of the dataSet
+```
+```{r Ted_Talk_sd}
+sd(Ted_Talk$likes, na.rm = TRUE) #standad dDeviation of the dataSet
+```
+
+```{r Ted_Talk_plot}
+plot(views, likes, main = "Scatter Plots for Views and Likes", xlab = "VIEWS", ylab="LIKES", pch=24, col= "dodgerblue1")
+#Scatter plot for Views and Likes
+```
+```{r Ted_Talk_bplot}
+bplot <- table(Ted_Talk$views,Ted_Talk$likes)
+barplot(bplot)
+#Bar Plot for Views and Likes
+```
+```{r Ted_Talk_cor}
+cor(views,likes)
+#3 Correlation between Views and Likes
+
+```
+
